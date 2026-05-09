@@ -23,7 +23,7 @@ export const createMenuItemSchema = z.object({
 
 export const updateMenuItemSchema = z.object({
   params: z.object({
-    menuItemId: z.string().uuid(),
+    menuItemId: z.uuid(),
   }),
   body: z
     .object({
@@ -49,7 +49,7 @@ export const updateMenuItemSchema = z.object({
 
 export const menuItemIdParamSchema = z.object({
   params: z.object({
-    menuItemId: z.string().uuid(),
+    menuItemId: z.uuid(),
   }),
   body: z.unknown(),
   query: z

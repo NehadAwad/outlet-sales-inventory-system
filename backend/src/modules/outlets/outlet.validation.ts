@@ -16,7 +16,7 @@ export const createOutletSchema = z.object({
 
 export const updateOutletSchema = z.object({
   params: z.object({
-    outletId: z.string().uuid(),
+    outletId: z.uuid(),
   }),
   body: z
     .object({
@@ -38,7 +38,7 @@ export const updateOutletSchema = z.object({
 
 export const outletIdParamSchema = z.object({
   params: z.object({
-    outletId: z.string().uuid(),
+    outletId: z.uuid(),
   }),
   body: z.unknown(),
   query: z
