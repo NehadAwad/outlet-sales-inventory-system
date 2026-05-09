@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { validate } from "../../middlewares/validate.middleware";
 import { asyncHandler } from "../../utils/asyncHandler";
+import { inventoryRoutes } from "../inventory/inventory.routes";
 import * as outletController from "./outlet.controller";
 import { outletMenuRoutes } from "../outlet-menu/outletMenu.routes";
 import {
@@ -20,6 +21,8 @@ outletRoutes.post(
 outletRoutes.get("/", asyncHandler(outletController.listOutlets));
 
 outletRoutes.use("/:outletId/menu-items", outletMenuRoutes);
+
+outletRoutes.use("/:outletId/inventory", inventoryRoutes);
 
 outletRoutes.get(
   "/:outletId",
