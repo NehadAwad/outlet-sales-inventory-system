@@ -2,7 +2,7 @@
   "name": "pos-backend",
   "private": true,
   "version": "0.1.0",
-  "description": "POS assessment API — Express, TypeScript, TypeORM, PostgreSQL",
+  "description": "POS API — Express, TypeScript, TypeORM, PostgreSQL",
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
