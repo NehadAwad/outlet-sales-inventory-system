@@ -1,0 +1,9 @@
+{
+  "name": "outlet-sales-inventory-system",
+  "private": true,
+  "description": "Multi-outlet POS platform — Senior Technical Assessment",
+  "version": "0.1.0",
+  "scripts": {
+    "backend:dev": "npm run dev --prefix backend"
+  }
+}
