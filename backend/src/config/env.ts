@@ -12,5 +12,9 @@ export const env = {
     username: process.env.DB_USERNAME ?? "postgres",
     password: process.env.DB_PASSWORD ?? "postgres",
     database: process.env.DB_NAME ?? "pos_db",
+    ssl:
+      process.env.DB_SSL === "true" ||
+      process.env.DB_SSL === "1" ||
+      process.env.PGSSLMODE === "require",
   },
 } as const;
