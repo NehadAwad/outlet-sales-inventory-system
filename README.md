@@ -4,4 +4,12 @@ Senior Technical Assessment: multi-outlet POS with HQ menu assignment, per-outle
 
 Full setup, API documentation, and Docker instructions will be added as implementation progresses.
 
+## Frontend (dev)
+
+From the repo root:
+
+```bash
+cp frontend/.env.example frontend/.env
+npm run frontend:dev
+```
 
