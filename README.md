@@ -13,3 +13,15 @@ cp frontend/.env.example frontend/.env
 npm run frontend:dev
 ```
 
+## Database (Docker, PostgreSQL only)
+
+For local development with the API against Postgres in Docker (matches `backend/.env.example` defaults: `DB_HOST=localhost`, `DB_PORT=5432`, `DB_NAME=pos_db`):
+
+```bash
+docker compose up -d
+docker compose ps
+```
+
+Tear down (keeps data): `docker compose down`  
+Tear down and **delete** data: `docker compose down -v`
+
