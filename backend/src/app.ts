@@ -5,6 +5,7 @@ import { errorMiddleware } from "./middlewares/error.middleware";
 import { notFoundMiddleware } from "./middlewares/notFound.middleware";
 import { menuItemRoutes } from "./modules/menu-items/menuItem.routes";
 import { outletRoutes } from "./modules/outlets/outlet.routes";
+import { reportRoutes } from "./modules/reports/report.routes";
 import { sendSuccess } from "./utils/ApiResponse";
 
 export const app = express();
@@ -23,6 +24,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/api/v1/outlets", outletRoutes);
 app.use("/api/v1/menu-items", menuItemRoutes);
+app.use("/api/v1/reports", reportRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

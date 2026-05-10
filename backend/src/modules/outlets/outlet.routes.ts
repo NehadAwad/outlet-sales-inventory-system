@@ -4,6 +4,7 @@ import { asyncHandler } from "../../utils/asyncHandler";
 import { inventoryRoutes } from "../inventory/inventory.routes";
 import * as outletController from "./outlet.controller";
 import { outletMenuRoutes } from "../outlet-menu/outletMenu.routes";
+import { saleRoutes } from "../sales/sale.routes";
 import {
   createOutletSchema,
   outletIdParamSchema,
@@ -23,6 +24,8 @@ outletRoutes.get("/", asyncHandler(outletController.listOutlets));
 outletRoutes.use("/:outletId/menu-items", outletMenuRoutes);
 
 outletRoutes.use("/:outletId/inventory", inventoryRoutes);
+
+outletRoutes.use("/:outletId/sales", saleRoutes);
 
 outletRoutes.get(
   "/:outletId",
