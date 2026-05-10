@@ -1,0 +1,19 @@
+# Render Blueprint — POS API (monorepo backend).
+# After linking the repo, set DATABASE_URL and CORS_ORIGIN in the dashboard (sync: false).
+# Frontend deploys separately on Vercel.
+
+services:
+  - type: web
+    name: outlet-pos-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run migration:run && npm run start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false

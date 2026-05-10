@@ -6,10 +6,23 @@ const databaseUrlRaw = process.env.DATABASE_URL?.trim();
 const databaseUrl =
   databaseUrlRaw && databaseUrlRaw.length > 0 ? databaseUrlRaw : undefined;
 
+const DEFAULT_DEV_CORS = "http://localhost:5173";
+
+function parseCorsOrigins(raw: string | undefined): string[] {
+  if (raw === undefined || raw.trim() === "") {
+    return [DEFAULT_DEV_CORS];
+  }
+  const list = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  return list.length > 0 ? list : [DEFAULT_DEV_CORS];
+}
+
 export const env = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   port: Number(process.env.PORT ?? 5000),
-  corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:5173",
+  corsAllowedOrigins: parseCorsOrigins(process.env.CORS_ORIGIN),
   db: {
     databaseUrl,
     host: process.env.DB_HOST ?? "localhost",

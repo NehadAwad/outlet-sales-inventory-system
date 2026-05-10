@@ -10,9 +10,13 @@ import { sendSuccess } from "./utils/ApiResponse";
 
 export const app = express();
 
+if (env.nodeEnv === "production") {
+  app.set("trust proxy", 1);
+}
+
 app.use(
   cors({
-    origin: env.corsOrigin,
+    origin: env.corsAllowedOrigins,
     credentials: true,
   })
 );
