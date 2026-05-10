@@ -11,17 +11,26 @@ cp frontend/.env.example frontend/.env
 npm run frontend:dev
 ```
 
-## Database (Docker, PostgreSQL only)
+## Docker (full stack)
 
-For local development with the API against Postgres in Docker (matches `backend/.env.example` defaults: `DB_HOST=localhost`, `DB_PORT=5432`, `DB_NAME=pos_db`):
+Postgres, API (migrations on startup), and static frontend (Nginx SPA):
 
 ```bash
-docker compose up -d
-docker compose ps
+docker compose up --build
 ```
 
-Tear down (keeps data): `docker compose down`  
+| Published URL | Service |
+|---------------|---------|
+| http://localhost:8080 | Frontend (Nginx) |
+| http://localhost:5000 | API (`CORS_ORIGIN` set to `http://localhost:8080`) |
+| localhost:5432 | Postgres (`postgres` / `postgres` / `pos_db`) |
+
+The frontend image is built with `VITE_API_BASE_URL=http://localhost:5000/api/v1` so the **browser** talks to the API on the host. After changing that URL, rebuild: `docker compose build --no-deps frontend`.
+
+Tear down (keeps DB volume): `docker compose down`  
 Tear down and **delete** data: `docker compose down -v`
+
+If host port **5000** is already in use, stop the other process or adjust the published port in [`docker-compose.yml`](docker-compose.yml) and set matching `CORS_ORIGIN` / rebuild frontend with the matching `VITE_API_BASE_URL`.
 
 ## Deployment (monorepo)
 

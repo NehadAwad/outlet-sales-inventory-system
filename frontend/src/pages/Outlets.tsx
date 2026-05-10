@@ -1,5 +1,5 @@
 import { type FormEvent, useCallback, useEffect, useId, useState } from 'react'
-import { ApiRequestError } from '../api/client'
+import { ApiRequestError, isAbortError } from '../api/client'
 import { createOutlet, fetchOutlets } from '../api/outlets'
 import type { Outlet } from '../types'
 
@@ -34,7 +34,7 @@ export default function Outlets() {
       const list = await fetchOutlets(signal)
       setOutlets(list)
     } catch (e) {
-      if (e instanceof Error && e.name === 'AbortError') return
+      if (isAbortError(e)) return
       const msg =
         e instanceof ApiRequestError
           ? e.message

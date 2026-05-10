@@ -1,4 +1,5 @@
 import type { ApiErrorBody, ApiSuccess } from '../types'
+import { formatValidationIssues } from '../utils/apiErrors'
 
 const DEV_DEFAULT_API_BASE = 'http://localhost:5000/api/v1'
 
@@ -33,6 +34,16 @@ function joinUrl(base: string, path: string): string {
   return `${b}${p}`
 }
 
+/** When `fetch` is aborted (React strict mode, route/outlet change), browsers throw DOMException/Error — do not wrap as ApiRequestError. */
+export function isAbortError(e: unknown): boolean {
+  if (!e || typeof e !== 'object') return false
+  const err = e as { name?: string; message?: string }
+  if (err.name === 'AbortError') return true
+  if (typeof DOMException !== 'undefined' && e instanceof DOMException && e.name === 'AbortError') return true
+  if (typeof err.message === 'string' && /\babort(ed)?\b/i.test(err.message)) return true
+  return false
+}
+
 /**
  * Calls the POS JSON API. On HTTP success, returns the parsed `data` field (may be undefined).
  * On failure, throws {@link ApiRequestError} with server message when present.
@@ -63,6 +74,7 @@ export async function apiRequest<T>(
       signal: init?.signal,
     })
   } catch (e) {
+    if (isAbortError(e)) throw e
     const msg = e instanceof Error ? e.message : 'Network error'
     throw new ApiRequestError(msg, 0)
   }
@@ -80,11 +92,18 @@ export async function apiRequest<T>(
 
   if (!response.ok) {
     const err = body as Partial<ApiErrorBody>
-    const message =
+    let message =
       typeof err.message === 'string' && err.message
         ? err.message
         : `Request failed (${response.status})`
     const errors = Array.isArray(err.errors) ? err.errors : []
+    const detail = formatValidationIssues(errors)
+    if (detail) {
+      message =
+        message === 'Validation failed' || message.startsWith('Request failed')
+          ? detail
+          : `${message}: ${detail}`
+    }
     throw new ApiRequestError(message, response.status, errors)
   }
 

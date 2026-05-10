@@ -41,6 +41,15 @@ export interface Inventory {
   updatedAt: IsoDateString
 }
 
+export interface SaleItem {
+  id: string
+  saleId: string
+  menuItemId: string
+  quantity: number
+  unitPrice: string
+  lineTotal: string
+}
+
 export interface Sale {
   id: string
   outletId: string
@@ -50,13 +59,37 @@ export interface Sale {
   items?: SaleItem[]
 }
 
-export interface SaleItem {
-  id: string
-  saleId: string
+/** Outlet menu row as returned by the API (includes nested catalog item when loaded with relations). */
+export interface OutletMenuItemRow extends OutletMenuItem {
+  menuItem?: MenuItem
+}
+
+/** Inventory row as returned by the API (includes nested catalog item when loaded with relations). */
+export interface InventoryRow extends Inventory {
+  menuItem?: MenuItem
+}
+
+/** Sale line as returned by the API with optional nested menu item. */
+export interface SaleItemRow extends SaleItem {
+  menuItem?: Pick<MenuItem, 'id' | 'name' | 'sku'>
+}
+
+/** Sale as returned after create/detail fetch (lines may include menu metadata). */
+export interface SaleDetail extends Omit<Sale, 'items'> {
+  items?: SaleItemRow[]
+}
+
+export interface RevenueByOutletRow {
+  outletId: string
+  outletName: string
+  totalRevenue: string
+}
+
+export interface TopSellingItemRow {
   menuItemId: string
-  quantity: number
-  unitPrice: string
-  lineTotal: string
+  name: string
+  totalQuantity: number
+  totalRevenue: string
 }
 
 export interface ApiSuccess<T> {
