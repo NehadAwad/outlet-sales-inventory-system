@@ -7,7 +7,7 @@ services:
     name: outlet-pos-api
     runtime: node
     rootDir: backend
-    buildCommand: npm ci && npm run build
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: npm run migration:run && npm run start
     healthCheckPath: /health
     envVars:
