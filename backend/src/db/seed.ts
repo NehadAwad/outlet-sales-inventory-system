@@ -19,7 +19,7 @@ const menuItemSeeds = [
   { name: "Chicken Rice", sku: "RICE-001", basePrice: "10.00" },
 ] as const;
 
-/** Outlet-specific assignment prices (Appendix A.7) */
+/** Outlet-specific menu assignment prices used by seed data */
 const assignmentSeeds = [
   { outletCode: "DOWNTOWN", sku: "BURGER-001", price: "12.50" },
   { outletCode: "DOWNTOWN", sku: "COFFEE-001", price: "5.50" },
