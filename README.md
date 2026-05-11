@@ -178,24 +178,13 @@ If port **5000** is taken on the host, adjust [`docker-compose.yml`](docker-comp
 
 Production layout: **Vercel** (static SPA), **Render** (Node API), **Neon** (Postgres). Compose above is for **local** full stack only.
 
-| Platform | Role | Notes |
-|----------|------|--------|
-| Vercel | Frontend | Root directory **`frontend`**; set **`VITE_API_BASE_URL`** to `https://<api-host>/api/v1` for Production (and Preview if needed). Redeploy after changing env. |
-| Render | API | Root directory **`backend`**; build `npm ci --include=dev && npm run build`; start `npm run migration:run && npm run start`. Set **`DATABASE_URL`**, **`NODE_ENV=production`**, **`CORS_ORIGIN`** (comma-separated frontend origins). Do not set **`PORT`**. |
-| Neon | Database | Connection string with TLS (`sslmode=require`); paste into Render as **`DATABASE_URL`**. |
-
-### Deployed instances (example)
-
-Replace with your own URLs if different:
+### Deployed instances 
 
 | App | URL |
 |-----|-----|
 | Frontend | [https://outlet-sales-inventory-system.vercel.app](https://outlet-sales-inventory-system.vercel.app) |
 | API | [https://outlet-sales-inventory-system.onrender.com](https://outlet-sales-inventory-system.onrender.com) |
 
-Configure **`VITE_API_BASE_URL`** on Vercel to `https://outlet-sales-inventory-system.onrender.com/api/v1`. On Render, set **`CORS_ORIGIN`** to include `https://outlet-sales-inventory-system.vercel.app` (exact origin; no path).
-
-[`render.yaml`](render.yaml) documents a Blueprint-style service definition for the API.
 
 ### Smoke test (after deploy or local run)
 
@@ -206,15 +195,6 @@ curl -sS "http://localhost:5000/api/v1/outlets"
 
 For production, substitute your public API origin. Expect JSON with `"success":true` for `/health` and a list payload for outlets.
 
-## Troubleshooting
-
-| Issue | What to check |
-|-------|----------------|
-| **Port 5000 already in use** (local or Docker publish) | Stop the conflicting process or change the host port in [`docker-compose.yml`](docker-compose.yml) and rebuild the frontend image with a matching `VITE_API_BASE_URL`. |
-| **CORS errors** in the browser | `CORS_ORIGIN` on the API must list the **exact** SPA origin (`https://your-app.vercel.app` or `http://localhost:5173`), no path. |
-| **Render build fails** (`tsc` / missing `@types`) | Use build command `npm ci --include=dev && npm run build` so devDependencies install when `NODE_ENV=production`. See [`render.yaml`](render.yaml). |
-| **Sale returns 400 insufficient stock** | Stock is per outlet; ensure inventory rows exist and quantities are sufficient. |
-| **Migrations fail on start** | `DATABASE_URL` / TLS and DB reachability; Neon project not paused. |
 
 ## Further reading
 
