@@ -224,4 +224,3 @@ For production, substitute your public API origin. Expect JSON with `"success":t
 - [docs/microservices-plan.md](docs/microservices-plan.md) — Possible service boundaries  
 - [docs/offline-pos-strategy.md](docs/offline-pos-strategy.md) — Offline sync and idempotency sketch  
 
-Never commit real secrets; use `.env` locally and platform env vars in production.
