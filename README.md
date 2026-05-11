@@ -11,7 +11,7 @@ Multi-outlet **POS** platform: HQ maintains a **master menu**, assigns items to 
 | **Web application** | [https://outlet-sales-inventory-system.vercel.app](https://outlet-sales-inventory-system.vercel.app) |
 | **REST API** | [https://outlet-sales-inventory-system.onrender.com](https://outlet-sales-inventory-system.onrender.com) |
 
-The UI is a static SPA on **Vercel**; the API runs on **Render** with **Neon** Postgres. Full platform notes are under [Deployment](#deployment) below.
+The UI is a static SPA on **Vercel**; the API runs on **Render** with **Neon** Postgres.
 
 ## Tech stack
 
