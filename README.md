@@ -2,6 +2,17 @@
 
 Multi-outlet **POS** platform: HQ maintains a **master menu**, assigns items to **outlets** with optional **price overrides**, tracks **per-outlet inventory**, records **transactional sales** with **sequential receipts**, and exposes **reporting** (revenue by outlet, top-selling items).
 
+## Live deployment
+
+**[Open the web application →](https://outlet-sales-inventory-system.vercel.app)**
+
+| Role | URL |
+|------|-----|
+| **Web application** | [https://outlet-sales-inventory-system.vercel.app](https://outlet-sales-inventory-system.vercel.app) |
+| **REST API** | [https://outlet-sales-inventory-system.onrender.com](https://outlet-sales-inventory-system.onrender.com) |
+
+The UI is a static SPA on **Vercel**; the API runs on **Render** with **Neon** Postgres. Full platform notes are under [Deployment](#deployment) below.
+
 ## Tech stack
 
 | Layer | Technologies |
@@ -173,27 +184,6 @@ Tear down (keep volume): `docker compose down`
 Tear down and delete data: `docker compose down -v`
 
 If port **5000** is taken on the host, adjust [`docker-compose.yml`](docker-compose.yml) published ports and align `CORS_ORIGIN` / frontend build args.
-
-## Deployment
-
-Production layout: **Vercel** (static SPA), **Render** (Node API), **Neon** (Postgres). Compose above is for **local** full stack only.
-
-### Deployed instances 
-
-| App | URL |
-|-----|-----|
-| Frontend | [https://outlet-sales-inventory-system.vercel.app](https://outlet-sales-inventory-system.vercel.app) |
-| API | [https://outlet-sales-inventory-system.onrender.com](https://outlet-sales-inventory-system.onrender.com) |
-
-
-### Smoke test (after deploy or local run)
-
-```bash
-curl -sS "http://localhost:5000/health"
-curl -sS "http://localhost:5000/api/v1/outlets"
-```
-
-For production, substitute your public API origin. Expect JSON with `"success":true` for `/health` and a list payload for outlets.
 
 
 ## Further reading
