@@ -10,12 +10,6 @@ function getBaseUrl(): string | undefined {
   return undefined
 }
 
-if (import.meta.env.DEV && !import.meta.env.VITE_API_BASE_URL?.trim()) {
-  console.info(
-    `[api] VITE_API_BASE_URL not set; using ${DEV_DEFAULT_API_BASE}. Add frontend/.env to override (see .env.example).`,
-  )
-}
-
 export class ApiRequestError extends Error {
   readonly statusCode: number
   readonly errors: unknown[]

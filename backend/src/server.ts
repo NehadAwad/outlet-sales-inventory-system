@@ -6,9 +6,7 @@ import { AppDataSource } from "./db/data-source";
 async function bootstrap(): Promise<void> {
   try {
     await AppDataSource.initialize();
-    app.listen(env.port, () => {
-      console.log(`POS API listening on port ${env.port}`);
-    });
+    app.listen(env.port);
   } catch (error) {
     console.error("Failed to start server", error);
     process.exit(1);
